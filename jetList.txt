@@ -1,0 +1,12 @@
+Fighter,F-15 Eagle,1650,1221,30000000
+Fighter,F-22 Raptor,1500,1841,150000000
+Bomber,B-52 Stratofortress,650,1250,104000000
+Bomber,B-2 Spirit,630,1470,737000000
+GroundAttack,AC-130 Spectre,299,2532,210000000
+GroundAttack,AC-47 Spooky,230,2175,10000000
+MilitaryTransport,C-17 Globemaster III, 518,2785,218000000
+MilitaryTransport,C-130 Hercules,368,2359,30100000
+AerialRefueler,KC-135 Stratotanker,580,1500,39600000
+AerialRefueler,KC-46 Pegasus,570,6385,147000000
+AEWACS,E-3 Sentry,531,4603,270000000
+AEWACS,E-2 Hawkeye,403,3504,176000000
