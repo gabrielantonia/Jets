@@ -31,8 +31,8 @@ public class AirField {
 	public void listFleet() {
 		int counter = 1;
 		for (Jet jet : jets) {
-			System.out.println("" + counter + ". \tModel: " + jet.getModel() + "   Max Speed: " + jet.getSpeed() + "   Max Range:"
-					+ jet.getRange() + "   Price: " + jet.getPrice()+ "\n");
+			System.out.println("" + counter + ". \tModel: " + jet.getModel() + "   Max Speed: " + jet.getSpeed()
+					+ "   Max Range:" + jet.getRange() + "   Price: " + jet.getPrice() + "\n");
 			counter++;
 		}
 	}
@@ -68,7 +68,7 @@ public class AirField {
 		System.out.println(maxRangeJet);
 	}
 
-	public void loadAllCargoJets() {
+	public void nonCombatCapabilities() {
 		for (Jet jet : jets) {
 			if (jet instanceof MilitaryTransport) {
 				System.out.print(jet.getModel() + " ");
@@ -82,12 +82,26 @@ public class AirField {
 				System.out.print(jet.getModel() + " ");
 				((AEWACS) jet).load();
 			}
+		}
+		for (Jet jet : jets) {
+			if (jet instanceof MilitaryTransport) {
+				System.out.print(jet.getModel() + " ");
+				((MilitaryTransport) jet).unload();
+			}
+			if (jet instanceof AerialRefueler) {
+				System.out.print(jet.getModel() + " ");
+				((AerialRefueler) jet).unload();
+			}
+			if (jet instanceof AEWACS) {
+				System.out.print(jet.getModel() + " ");
+				((AEWACS) jet).unload();
+			}
 
 		}
 
 	}
 
-	public void dogfight() {
+	public void combatCapabilities() {
 		for (Jet jet : jets) {
 			if (jet instanceof Fighter) {
 				System.out.print(jet.getModel() + " ");
@@ -101,12 +115,25 @@ public class AirField {
 				System.out.print(jet.getModel() + " ");
 				((Bomber) jet).attack();
 			}
+		}
+		for (Jet jet : jets) {
+			if (jet instanceof Fighter) {
+				System.out.print(jet.getModel() + " ");
+				((Fighter) jet).evade();
+			}
+			if (jet instanceof GroundAttack) {
+				System.out.print(jet.getModel() + " ");
+				((GroundAttack) jet).evade();
+			}
+			if (jet instanceof Bomber) {
+				System.out.print(jet.getModel() + " ");
+				((Bomber) jet).evade();
+			}
 
 		}
 	}
 
-	public void addJet() {
-		Scanner scan = new Scanner(System.in);
+	public void addJet(Scanner scan) {
 
 		System.out.println("Select Aircraft Type:");
 		System.out.println("1. Fighter");
@@ -163,20 +190,18 @@ public class AirField {
 		jets.add(jet);
 	}
 
-	public void removeJet() {
-		Scanner scan = new Scanner(System.in);
+	public void removeJet(Scanner scan) {
 		System.out.println("Select which Aircraft to remove from the hangar: \n");
 		listFleet();
 		int choice = scan.nextInt();
-		if(choice<= jets.size()) {
-		System.out.print(jets.get((choice-1)) + "has been removed from the hangar.");
-		jets.remove(choice-1);
-		return;
-		}
-		else {
+
+		if (choice <= jets.size()) {
+			System.out.print(jets.get((choice - 1)) + "has been removed from the hangar.");
+			jets.remove(choice - 1);
+		} else {
 			System.out.println("Select valid option:");
 		}
-		
+
 	}
 
 	@Override

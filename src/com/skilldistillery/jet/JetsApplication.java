@@ -9,11 +9,11 @@ import java.util.Scanner;
 public class JetsApplication {
 
 	public static void main(String[] args) {
-
+		Scanner scan = new Scanner(System.in);
 		AirField airfield = new AirField();
 		launch(airfield);
-		displayUserMenu(airfield);
-
+		displayUserMenu(airfield, scan);
+		scan.close();
 	}
 
 	public static void launch(AirField airfield) {
@@ -67,27 +67,26 @@ public class JetsApplication {
 				}
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public static void displayUserMenu(AirField airfield) {
+	public static void displayUserMenu(AirField airfield, Scanner scan) {
 
-		Scanner scan = new Scanner(System.in);
 		boolean condition = true;
 		while (condition) {
 			System.out.println("\n1. List Fleet");
 			System.out.println("2. Fly all jets");
 			System.out.println("3. View fastest jet");
 			System.out.println("4. View jet with longest range");
-			System.out.println("5. Load all cargo jets");
-			System.out.println("6. Dogfight!");
+			System.out.println("5. Demonstrate non-combat capabilities");
+			System.out.println("6. Demonstrate combat capabilities");
 			System.out.println("7. Add a jet to fleet");
 			System.out.println("8. Remove a jet from the fleet");
 			System.out.println("9. Quit");
 
 			int choice = scan.nextInt();
+
 			switch (choice) {
 			case 1:
 				airfield.listFleet();
@@ -102,16 +101,16 @@ public class JetsApplication {
 				airfield.viewJetWithLongestRange();
 				break;
 			case 5:
-				airfield.loadAllCargoJets();
+				airfield.nonCombatCapabilities();
 				break;
 			case 6:
-				airfield.dogfight();
+				airfield.combatCapabilities();
 				break;
 			case 7:
-				airfield.addJet();
+				airfield.addJet(scan);
 				break;
 			case 8:
-				airfield.removeJet();
+				airfield.removeJet(scan);
 				break;
 			case 9:
 				condition = false;

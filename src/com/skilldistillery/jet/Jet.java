@@ -1,6 +1,11 @@
 package com.skilldistillery.jet;
 
 public abstract class Jet {
+
+	private String model;
+	private int speed;
+	private int range;
+	private int price;
 	
 	@Override
 	public int hashCode() {
@@ -35,11 +40,6 @@ public abstract class Jet {
 		return true;
 	}
 
-	private String model;
-	private int speed;
-	private int range;
-	private int price;
-	
 	
 	public String getModel() {
 		return model;
