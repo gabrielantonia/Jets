@@ -36,7 +36,15 @@ public class AirField {
 			counter++;
 		}
 	}
-
+	public void flyJet(Scanner scan) {
+		System.out.println("Choose a jet to fly:\n ");
+		listFleet();
+		
+		int choice = scan.nextInt();
+		Jet jet= jets.get(choice);
+		jet.fly();
+		
+	}
 	public void flyAllJets() {
 		for (Jet jet : jets) {
 			jet.fly();
