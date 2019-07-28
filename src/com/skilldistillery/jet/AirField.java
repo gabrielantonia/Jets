@@ -28,28 +28,52 @@ public class AirField {
 		this.jets.remove(index + 1);
 	}
 
-	public void listFleet() {
+	public void listFleet(Squadron squadron) {
 		int counter = 1;
 		for (Jet jet : jets) {
-			System.out.println("" + counter + ". \tModel: " + jet.getModel() + "   Max Speed: " + jet.getSpeed()
-					+ "   Max Range:" + jet.getRange() + "   Price: " + jet.getPrice() + "\n");
+			System.out.print("" + counter + ". \tModel: " + jet.getModel() + "   Max Speed: " + jet.getSpeed()
+					+ "   Max Range:" + jet.getRange() + "   Price: " + jet.getPrice() + "\n\tPilot:\t" );
+			jet.getPilot().getPilotInfo();
+			System.out.println("\n");
 			counter++;
 		}
 	}
-	public void flyJet(Scanner scan) {
-		System.out.println("Choose a jet to fly:\n ");
-		listFleet();
-		
-		int choice = scan.nextInt();
-		Jet jet= jets.get(choice);
-		jet.fly();
-		
+
+	public void assignPilot(Scanner scan, Squadron squadron, AirField airfield) {
+		System.out.println("Select aircraft to assign pilot to: ");
+		listFleet(squadron);
+		int jetChoice = scan.nextInt();
+		squadron.listPilots();
+		int pilotChoice = scan.nextInt();
+
+		Pilot pilot = squadron.getPilot(pilotChoice - 1);
+		Jet jet = airfield.jets.get(jetChoice - 1);
+		jet.setPilot(pilot);
+		System.out.println(
+				pilot.getFirstName() + " " + pilot.getLastName() + " has been assigned to: " + jet.getModel() + ".");
 	}
+
+	public void assignInitialPilot(Squadron squadron) {
+		for (int i = 0; i < jets.size(); i++) {
+			Jet currentJet = jets.get(i);
+			Pilot currentPilot = squadron.getPilot(i);
+			currentJet.setPilot(currentPilot);
+		}
+	}
+
+	public void flyJet(Scanner scan, Squadron squadron) {
+		System.out.println("Choose a jet to fly:\n ");
+		listFleet(squadron);
+
+		int choice = scan.nextInt()-1;
+		Jet jet = jets.get(choice);
+		jet.fly();
+	}
+
 	public void flyAllJets() {
 		for (Jet jet : jets) {
 			jet.fly();
 		}
-
 	}
 
 	public void viewFastestJet() {
@@ -59,9 +83,11 @@ public class AirField {
 			if (jet.getSpeed() > jetSpeed) {
 				jetSpeed = jet.getSpeed();
 				fastestJet = jet;
+
 			}
 		}
-		System.out.println(fastestJet);
+		System.out.println("The fastest jet in the fleet is the " + fastestJet.getModel() + " with a top speed of "
+				+ jetSpeed + "!");
 	}
 
 	public void viewJetWithLongestRange() {
@@ -73,7 +99,8 @@ public class AirField {
 				maxRangeJet = jet;
 			}
 		}
-		System.out.println(maxRangeJet);
+		System.out.println("The jet with the longest range in the fleet is the " + maxRangeJet.getModel()
+				+ " with a max range of " + jetRange + "!");
 	}
 
 	public void nonCombatCapabilities() {
@@ -104,9 +131,7 @@ public class AirField {
 				System.out.print(jet.getModel() + " ");
 				((AEWACS) jet).unload();
 			}
-
 		}
-
 	}
 
 	public void combatCapabilities() {
@@ -137,11 +162,10 @@ public class AirField {
 				System.out.print(jet.getModel() + " ");
 				((Bomber) jet).evade();
 			}
-
 		}
 	}
 
-	public void addJet(Scanner scan) {
+	public void addJet(Scanner scan, Squadron squadron) {
 
 		System.out.println("Select Aircraft Type:");
 		System.out.println("1. Fighter");
@@ -168,7 +192,8 @@ public class AirField {
 
 		System.out.println("What is the price: ");
 		Integer price = scan.nextInt();
-
+		
+		
 		Jet jet = null;
 		switch (type) {
 		case 1:
@@ -195,28 +220,25 @@ public class AirField {
 			System.out.println("Select valid option:");
 			return;
 		}
+		System.out.println("Select a pilot: ");
+		squadron.listPilots();
+		int pilot = scan.nextInt();
+		Pilot pilotChoice = squadron.getPilot(pilot - 1);
+		jet.setPilot(pilotChoice);
 		jets.add(jet);
+		System.out.println(jet.getModel() + " has been added to the fleet.");
 	}
 
-	public void removeJet(Scanner scan) {
-		System.out.println("Select which Aircraft to remove from the hangar: \n");
-		listFleet();
+	public void removeJet(Scanner scan, Squadron squadron) {
+		System.out.println("Select which Aircraft to remove from the fleet: \n");
+		listFleet(squadron);
 		int choice = scan.nextInt();
 
 		if (choice <= jets.size()) {
-			System.out.print(jets.get((choice - 1)) + "has been removed from the hangar.");
+			System.out.print(jets.get((choice - 1)).getModel() + " has been removed from the fleet.\n");
 			jets.remove(choice - 1);
 		} else {
 			System.out.println("Select valid option:");
 		}
-
 	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("").append(jets).append("");
-		return builder.toString();
-	}
-
 }

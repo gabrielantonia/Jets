@@ -1,9 +1,9 @@
 package com.skilldistillery.jet;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class JetsApplication {
@@ -11,8 +11,11 @@ public class JetsApplication {
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 		AirField airfield = new AirField();
+		Squadron squadron = new Squadron();
 		launch(airfield);
-		displayUserMenu(airfield, scan);
+		enlistPilots(squadron, airfield, scan);
+		airfield.assignInitialPilot(squadron);
+		displayUserMenu(airfield, scan, squadron);
 		scan.close();
 	}
 
@@ -71,7 +74,29 @@ public class JetsApplication {
 		}
 	}
 
-	public static void displayUserMenu(AirField airfield, Scanner scan) {
+	public static void enlistPilots(Squadron squadron, AirField airfield, Scanner scan) {
+		try (BufferedReader br = new BufferedReader(new FileReader("pilots.txt"))) {
+			String lines;
+
+			while ((lines = br.readLine()) != null) {
+				String[] line = lines.split(",");
+				String firstName = line[0];
+				String lastName = line[1];
+				String gender = line[2];
+				String eIN = line[3];
+				Pilot pilot = new Pilot(firstName, lastName, gender, eIN);
+				squadron.addPilots(pilot);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+			;
+
+	}
+
+	public static void displayUserMenu(AirField airfield, Scanner scan, Squadron squadron) {
 
 		boolean condition = true;
 		while (condition) {
@@ -84,16 +109,20 @@ public class JetsApplication {
 			System.out.println("7. Demonstrate combat capabilities");
 			System.out.println("8. Add a jet to fleet");
 			System.out.println("9. Remove a jet from the fleet");
-			System.out.println("10. Quit");
+			System.out.println("10. View a list of registered pilots");
+			System.out.println("11. Assign pilot to aircraft");
+			System.out.println("12. Add a new pilot to the squadron");
+			System.out.println("13. Remove a pilot from the squadron");
+			System.out.println("14. Quit");
 
 			int choice = scan.nextInt();
 
 			switch (choice) {
 			case 1:
-				airfield.listFleet();
+				airfield.listFleet(squadron);
 				break;
 			case 2:
-				airfield.flyJet(scan);
+				airfield.flyJet(scan, squadron);
 				break;
 			case 3:
 				airfield.flyAllJets();
@@ -111,12 +140,24 @@ public class JetsApplication {
 				airfield.combatCapabilities();
 				break;
 			case 8:
-				airfield.addJet(scan);
+				airfield.addJet(scan, squadron);
 				break;
 			case 9:
-				airfield.removeJet(scan);
+				airfield.removeJet(scan, squadron);
 				break;
 			case 10:
+				squadron.listPilots();
+				break;
+			case 11:
+				airfield.assignPilot(scan, squadron, airfield);
+				break;
+			case 12:
+				squadron.addNewPilot(scan);
+				break;
+			case 13:
+				squadron.removePilot(scan);
+				break;
+			case 14:
 				condition = false;
 				break;
 			default:
