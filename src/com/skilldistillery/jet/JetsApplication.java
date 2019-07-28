@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
+
 public class JetsApplication {
 
 	public static void main(String[] args) {
@@ -22,7 +23,6 @@ public class JetsApplication {
 	public static void launch(AirField airfield) {
 		try (BufferedReader br = new BufferedReader(new FileReader("jetList.txt"))) {
 			String line;
-
 			while ((line = br.readLine()) != null) {
 				String[] word = line.split(",");
 				if (word[0].equals("Fighter")) {
@@ -92,12 +92,11 @@ public class JetsApplication {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-			;
-
 	}
 
 	public static void displayUserMenu(AirField airfield, Scanner scan, Squadron squadron) {
 
+		System.out.println("Welcome Commander to your new duty station. What would you like to do:");
 		boolean condition = true;
 		while (condition) {
 			System.out.println("\n1. List Fleet");

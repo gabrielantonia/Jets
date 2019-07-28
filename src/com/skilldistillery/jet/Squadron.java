@@ -10,24 +10,24 @@ public class Squadron {
 	public void addPilots(Pilot pilot) {
 		this.pilots.add(pilot);
 	}
-	
-	
-		public void getPilotInfo(int i) {
-		Pilot pilot= pilots.get(i);
-		System.out.print("First Name: " + pilot.getFirstName() + "   Last Name: " + pilot.getLastName()
-			+ "   Gender:" + pilot.getGender() + "   ID: " + pilot.geteIN() );
+
+	public void getPilotInfo(int i) {
+		Pilot pilot = pilots.get(i);
+		System.out.print("First Name: " + pilot.getFirstName() + "   Last Name: " + pilot.getLastName() + "   Gender:"
+				+ pilot.getGender() + "   ID: " + pilot.geteIN());
 	}
-	
+
 	public Pilot getPilot(int i) {
 		Pilot pilot = this.pilots.get(i);
 		return pilot;
 	}
+
 	public void listPilots() {
 		int counter = 1;
 		for (Pilot pilot : pilots) {
-			System.out.println("" + counter + ". \tFirst Name: " + pilot.getFirstName() + "   Last Name: " + pilot.getLastName()
-					+ "   Gender:" + pilot.getGender() + "   ID: " + pilot.geteIN() + "\n");
-		counter++;
+			System.out.println("" + counter + ". \tFirst Name: " + pilot.getFirstName() + "   Last Name: "
+					+ pilot.getLastName() + "   Gender:" + pilot.getGender() + "   ID: " + pilot.geteIN() + "\n");
+			counter++;
 		}
 	}
 
@@ -43,16 +43,14 @@ public class Squadron {
 		this.pilots = pilots;
 	}
 
-
 	public void removePilot(Scanner scan) {
 		System.out.println("\nChoose pilot to remove from squadron: ");
 		listPilots();
-		int pilot = (scan.nextInt()-1);
+		int pilot = (scan.nextInt() - 1);
 		this.getPilotInfo(pilot);
 		System.out.println(" has been removed from the squadron.");
 		pilots.remove(pilot);
 	}
-
 
 	public void addNewPilot(Scanner scan) {
 		System.out.println("First Name: ");
@@ -65,11 +63,7 @@ public class Squadron {
 		String eIN = scan.next();
 		Pilot pilot = new Pilot(firstName, lastName, gender, eIN);
 		pilots.add(pilot);
-//		this.getPilotInfo(pilots.size()-1);
 		pilot.getPilotInfo();
 		System.out.println(" has been added to the squadron.");
-		
-		
 	}
-
 }

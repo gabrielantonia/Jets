@@ -8,8 +8,6 @@ public abstract class Jet {
 	private int price;
 	private Pilot pilot;
 
-	
-	
 	public Pilot getPilot() {
 		return pilot;
 	}

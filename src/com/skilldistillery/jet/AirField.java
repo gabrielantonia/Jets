@@ -32,7 +32,7 @@ public class AirField {
 		int counter = 1;
 		for (Jet jet : jets) {
 			System.out.print("" + counter + ". \tModel: " + jet.getModel() + "   Max Speed: " + jet.getSpeed()
-					+ "   Max Range:" + jet.getRange() + "   Price: " + jet.getPrice() + "\n\tPilot:\t" );
+					+ "   Max Range:" + jet.getRange() + "   Price: " + jet.getPrice() + "\n\tPilot:\t");
 			jet.getPilot().getPilotInfo();
 			System.out.println("\n");
 			counter++;
@@ -65,7 +65,7 @@ public class AirField {
 		System.out.println("Choose a jet to fly:\n ");
 		listFleet(squadron);
 
-		int choice = scan.nextInt()-1;
+		int choice = scan.nextInt() - 1;
 		Jet jet = jets.get(choice);
 		jet.fly();
 	}
@@ -83,7 +83,6 @@ public class AirField {
 			if (jet.getSpeed() > jetSpeed) {
 				jetSpeed = jet.getSpeed();
 				fastestJet = jet;
-
 			}
 		}
 		System.out.println("The fastest jet in the fleet is the " + fastestJet.getModel() + " with a top speed of "
@@ -192,8 +191,7 @@ public class AirField {
 
 		System.out.println("What is the price: ");
 		Integer price = scan.nextInt();
-		
-		
+
 		Jet jet = null;
 		switch (type) {
 		case 1:
